@@ -1,6 +1,9 @@
 import { useEffect, useState, ChangeEvent } from "react";
 import { invoke } from "@tauri-apps/api/core";
-
+import "./App.css"; // Adjust the path if needed
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 // Define types for Git information
 interface GitConfig {
   name: string;
@@ -75,68 +78,78 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Git Account Switcher</h1>
+    <div className="flex flex-col items-center h-screen gap-4">
+      <h1 className="text-2xl font-bold mb-4">Git Account Switcher</h1>
 
       {/* Display the current Git Info */}
-      <div>
-        <h2>Current Git Info</h2>
-        <p>
-          <strong>Name:</strong> {currentGit.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {currentGit.email}
-        </p>
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold mb-2">Current Git Info</h2>
+        <div className="flex flex-col gap-2">
+          <p>
+            <strong>Name:</strong> {currentGit.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {currentGit.email}
+          </p>
+        </div>
       </div>
 
       {/* Personal Git Info Form */}
-      <div>
-        <h2>Personal Git Info</h2>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={personalGit.name}
-            onChange={handlePersonalChange}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={personalGit.email}
-            onChange={handlePersonalChange}
-          />
-        </label>
-        <button onClick={() => handleSubmit("personal")}>
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold mb-2">Personal Git Info</h2>
+        <div className="flex flex-col gap-2">
+          <Label className="flex flex-col gap-2">
+            Name:
+            <Input
+              type="text"
+              name="name"
+              value={personalGit.name}
+              onChange={handlePersonalChange}
+            />
+          </Label>
+
+          <Label className="flex flex-col gap-2">
+            Email:
+            <Input
+              type="email"
+              name="email"
+              value={personalGit.email}
+              onChange={handlePersonalChange}
+            />
+          </Label>
+        </div>
+
+        <Button onClick={() => handleSubmit("personal")}>
           Switch to Personal
-        </button>
+        </Button>
       </div>
 
       {/* Work Git Info Form */}
-      <div>
-        <h2>Work Git Info</h2>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={workGit.name}
-            onChange={handleWorkChange}
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={workGit.email}
-            onChange={handleWorkChange}
-          />
-        </label>
-        <button onClick={() => handleSubmit("work")}>Switch to Work</button>
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold mb-2">Work Git Info</h2>
+        <div className="flex flex-col gap-2">
+          <Label className="flex flex-col gap-2">
+            Name:
+            <Input
+              type="text"
+              name="name"
+              value={workGit.name}
+              onChange={handleWorkChange}
+            />
+          </Label>
+
+          <Label className="flex flex-col gap-2">
+            Email:
+            <Input
+              type="email"
+              name="email"
+              value={workGit.email}
+              onChange={handleWorkChange}
+            />
+          </Label>
+        </div>
+
+        <Button onClick={() => handleSubmit("work")}>Switch to Work</Button>
       </div>
     </div>
   );
