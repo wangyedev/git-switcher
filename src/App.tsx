@@ -93,13 +93,13 @@ function App() {
 
   return (
     <div className="container mx-auto my-4 space-y-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold mb-4">Git Account Switcher</h1>
+      <div className="flex justify-between items-center ">
+        <h1 className="text-2xl font-bold">Git Account Switcher</h1>
         <Setting handleClearGitConfig={handleClearGitConfig} />
       </div>
 
       {/* Display the current Git Info */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 bg-slate-100 rounded-md p-4">
         <h2 className="text-lg font-semibold">Current Git Info</h2>
 
         <div className="flex flex-col gap-2">
@@ -113,7 +113,7 @@ function App() {
       </div>
 
       {/* Personal Git Info Form */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 rounded-md p-4 ">
         <h2 className="text-lg font-semibold ">Personal Git Info</h2>
         <div className="flex flex-col gap-2">
           <Label className="flex flex-col gap-2">
@@ -151,7 +151,7 @@ function App() {
       </div>
 
       {/* Work Git Info Form */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 rounded-md p-4">
         <h2 className="text-lg font-semibold ">Work Git Info</h2>
         <div className="flex flex-col gap-2">
           <Label className="flex flex-col gap-2">
