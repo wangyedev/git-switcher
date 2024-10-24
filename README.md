@@ -27,18 +27,26 @@ To install Git Account Switcher, follow these steps:
    cd git-switcher
    ```
 3. Install the required dependencies:
+
    ```
    pnpm install
- 
+   ```
+
 4. Run the application:
+
    ```
    pnpm tauri dev
    ```
 
 5. Build the application:
+
    ```
    pnpm tauri build
    ```
+
+   After building, you can go to `src-tauri/target/release` to see the built app.
+
+   go to https://v2.tauri.app/distribute/ to see how to build the app for different platforms.
 
 ## Usage
 

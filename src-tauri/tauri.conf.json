@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "git-switcher",
+  "productName": "git switcher",
   "version": "0.1.1",
   "identifier": "com.git-switcher.app",
   "build": {
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "git-switcher",
+        "title": "git switcher",
         "width": 800,
         "height": 600
       }
