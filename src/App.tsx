@@ -71,32 +71,33 @@ function App() {
     const gitInfo = accountType === "personal" ? personalGit : workGit;
     invoke("switch_git_account", { accountType, gitInfo })
       .then(() => {
-        alert(`Switched to ${accountType} account`);
         fetchCurrentGitConfig(); // Refresh the current Git info
       })
       .catch((error) => console.error(error));
   };
 
   return (
-    <div className="flex flex-col items-center h-screen gap-4">
+    <div className="container mx-auto my-4 space-y-4">
       <h1 className="text-2xl font-bold mb-4">Git Account Switcher</h1>
 
       {/* Display the current Git Info */}
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold mb-2">Current Git Info</h2>
+        <h2 className="text-lg font-semibold">Current Git Info</h2>
         <div className="flex flex-col gap-2">
-          <p>
-            <strong>Name:</strong> {currentGit.name}
-          </p>
-          <p>
-            <strong>Email:</strong> {currentGit.email}
-          </p>
+          <>
+            <p>
+              <strong>Name:</strong> {currentGit.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {currentGit.email}
+            </p>
+          </>
         </div>
       </div>
 
       {/* Personal Git Info Form */}
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold mb-2">Personal Git Info</h2>
+        <h2 className="text-lg font-semibold ">Personal Git Info</h2>
         <div className="flex flex-col gap-2">
           <Label className="flex flex-col gap-2">
             Name:
@@ -119,14 +120,22 @@ function App() {
           </Label>
         </div>
 
-        <Button onClick={() => handleSubmit("personal")}>
+        <Button
+          onClick={() => handleSubmit("personal")}
+          disabled={
+            !personalGit.name ||
+            !personalGit.email ||
+            (personalGit.name === currentGit.name &&
+              personalGit.email === currentGit.email)
+          }
+        >
           Switch to Personal
         </Button>
       </div>
 
       {/* Work Git Info Form */}
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold mb-2">Work Git Info</h2>
+        <h2 className="text-lg font-semibold ">Work Git Info</h2>
         <div className="flex flex-col gap-2">
           <Label className="flex flex-col gap-2">
             Name:
@@ -149,7 +158,17 @@ function App() {
           </Label>
         </div>
 
-        <Button onClick={() => handleSubmit("work")}>Switch to Work</Button>
+        <Button
+          onClick={() => handleSubmit("work")}
+          disabled={
+            !workGit.name ||
+            !workGit.email ||
+            (workGit.name === currentGit.name &&
+              workGit.email === currentGit.email)
+          }
+        >
+          Switch to Work
+        </Button>
       </div>
     </div>
   );
