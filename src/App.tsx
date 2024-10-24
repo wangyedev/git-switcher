@@ -4,6 +4,7 @@ import "./App.css"; // Adjust the path if needed
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Setting from "@/components/Setting/Setting";
 // Define types for Git information
 interface GitConfig {
   name: string;
@@ -76,22 +77,38 @@ function App() {
       .catch((error) => console.error(error));
   };
 
+  const handleClearGitConfig = async () => {
+    try {
+      await invoke("reset_git_config");
+      await fetchCurrentGitConfig();
+
+      localStorage.removeItem("personalGit");
+      localStorage.removeItem("workGit");
+      setPersonalGit({ name: "", email: "" });
+      setWorkGit({ name: "", email: "" });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="container mx-auto my-4 space-y-4">
-      <h1 className="text-2xl font-bold mb-4">Git Account Switcher</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold mb-4">Git Account Switcher</h1>
+        <Setting handleClearGitConfig={handleClearGitConfig} />
+      </div>
 
       {/* Display the current Git Info */}
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold">Current Git Info</h2>
+
         <div className="flex flex-col gap-2">
-          <>
-            <p>
-              <strong>Name:</strong> {currentGit.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {currentGit.email}
-            </p>
-          </>
+          <p>
+            <strong>Name:</strong> {currentGit.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {currentGit.email}
+          </p>
         </div>
       </div>
 

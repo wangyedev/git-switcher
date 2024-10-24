@@ -3,14 +3,14 @@
 
 use std::process::Command;
 
-#[derive(serde::Serialize)]
-struct GitConfig {
+#[derive(serde::Serialize, serde::Deserialize)]
+struct GitAccount {
     name: String,
     email: String,
 }
 
 #[tauri::command]
-fn get_git_config() -> GitConfig {
+fn get_git_config() -> GitAccount {
     let name_output = Command::new("git")
         .args(&["config", "--global", "user.name"])
         .output()
@@ -28,17 +28,11 @@ fn get_git_config() -> GitConfig {
         .trim()
         .to_string();
 
-    GitConfig { name, email }
-}
-
-#[derive(serde::Deserialize)]
-struct GitInfo {
-    name: String,
-    email: String,
+    GitAccount { name, email }
 }
 
 #[tauri::command]
-fn switch_git_account(account_type: String, git_info: GitInfo) {
+fn switch_git_account(account_type: String, git_info: GitAccount) {
     // Switch Git configuration based on user input
     Command::new("git")
         .args(&["config", "--global", "user.name", &git_info.name])
@@ -53,9 +47,36 @@ fn switch_git_account(account_type: String, git_info: GitInfo) {
     println!("Switched to {} account", account_type);
 }
 
+#[tauri::command]
+fn reset_git_config() -> Result<(), String> {
+    // Command to unset global Git user name
+    let output_name = Command::new("git")
+        .args(&["config", "--global", "--unset", "user.name"])
+        .output();
+
+    if output_name.is_err() {
+        return Err("Failed to reset Git user.name".into());
+    }
+
+    // Command to unset global Git user email
+    let output_email = Command::new("git")
+        .args(&["config", "--global", "--unset", "user.email"])
+        .output();
+
+    if output_email.is_err() {
+        return Err("Failed to reset Git user.email".into());
+    }
+
+    Ok(())
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_git_config, switch_git_account])
+        .invoke_handler(tauri::generate_handler![
+            get_git_config,
+            switch_git_account,
+            reset_git_config
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
