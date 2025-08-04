@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="container mx-auto my-4 space-y-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Git Account Switcher</h1>
+        <h1 className="text-2xl font-bold">Dev Studio</h1>
         <Setting handleClearGitConfig={clearGitConfig} />
       </div>
 
